@@ -1,0 +1,17 @@
+syntax = "proto3";
+package velocity.service;
+
+option java_package = "cc.towerdefence.api.service.velocity";
+option java_outer_classname = "VelocityPrivateMessageProto";
+
+import "google/protobuf/empty.proto";
+
+service VelocityPrivateMessage {
+  rpc ReceiveMessage(PrivateMessage) returns (google.protobuf.Empty);
+}
+
+message PrivateMessage {
+  string sender_username = 1;
+  string receiverId = 2;
+  string message = 3;
+}

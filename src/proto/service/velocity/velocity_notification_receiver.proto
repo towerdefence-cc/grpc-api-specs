@@ -1,0 +1,17 @@
+syntax = "proto3";
+package velocity.service;
+
+option java_package = "cc.towerdefence.api.service.velocity";
+option java_outer_classname = "VelocityNotificationReceiverProto";
+
+import "google/protobuf/empty.proto";
+
+service VelocityNotificationReceiver {
+  rpc ReceiveFriendRequest(ReceiveFriendRequestRequest) returns (google.protobuf.Empty);
+}
+
+message ReceiveFriendRequestRequest {
+  string sender_id = 1;
+  string sender_username = 2;
+  string recipient_id = 3;
+}

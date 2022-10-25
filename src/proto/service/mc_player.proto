@@ -1,0 +1,70 @@
+syntax = "proto3";
+package service.mc_player;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "McPlayerProto";
+
+import "google/protobuf/empty.proto"; // unused
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+service McPlayer {
+  rpc GetPlayer(PlayerRequest) returns (PlayerResponse) {}
+  rpc GetPlayerByUsername(PlayerUsernameRequest) returns (PlayerResponse) {}
+  rpc GetPlayerSessions(PageablePlayerRequest) returns (PlayerSessionsResponse) {}
+
+  rpc OnPlayerLogin(PlayerLoginRequest) returns (PlayerLoginResponse) {}
+  rpc OnPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty) {}
+}
+
+message PlayerRequest {
+  string player_id = 1;
+}
+
+message PlayerUsernameRequest {
+  string username = 1; // ignore case when using the username
+}
+
+message PageablePlayerRequest {
+  string player_id = 1;
+  uint32 page = 2;
+  uint32 size = 3;
+}
+
+message PlayerResponse {
+  string id = 1;
+  string current_username = 2;
+  google.protobuf.Timestamp first_login = 3;
+  // If they are currently online this will not be up to date
+  google.protobuf.Timestamp last_online = 4;
+  bool currently_online = 5;
+  google.protobuf.Duration play_time = 6;
+}
+
+message PlayerSessionsResponse {
+  repeated PlayerSession sessions = 1;
+  uint32 page = 2;
+  uint64 total_elements = 3;
+  uint32 total_pages = 4;
+
+  message PlayerSession {
+    string session_id = 1;
+
+    google.protobuf.Timestamp login_time = 2;
+    optional google.protobuf.Timestamp logout_time = 3; // will be null if the player is currently online for this session
+  }
+}
+
+message PlayerLoginRequest {
+  string player_id = 1;
+  string username = 2;
+}
+
+message PlayerLoginResponse {
+  string session_id = 1;
+}
+
+message PlayerDisconnectRequest {
+  string player_id = 1;
+  string session_id = 2;
+}

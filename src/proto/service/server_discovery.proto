@@ -1,0 +1,15 @@
+syntax = "proto3";
+package service.server_discovery;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "ServerDiscoveryProto";
+
+import "model/server/lobby_server.proto";
+import "google/protobuf/empty.proto";
+
+/**
+Suggested = determine an optimal server to send the player to. E.g the emptier lobby/proxy, a filling minigame server.
+ */
+service ServerDiscovery {
+  rpc GetSuggestedLobbyServer (google.protobuf.Empty) returns (model.server.LobbyServer);
+}
