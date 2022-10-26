@@ -1,6 +1,5 @@
 name: Publish to development (snapshot) repo
-on:
-  commit:
+on: push
 
 jobs:
   publish:
