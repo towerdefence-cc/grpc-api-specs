@@ -38,11 +38,34 @@ protobuf {
 }
 
 publishing {
+
+    repositories {
+        maven {
+            name = "development"
+            url = uri("https://repo.towerdefence.cc/snapshots")
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_SECRET")
+            }
+        }
+        maven {
+            name = "production"
+            url = uri("https://repo.towerdefence.cc/releases")
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_SECRET")
+            }
+        }
+    }
+
     publications {
         maven(MavenPublication) {
             groupId = 'cc.towerdefence.api'
             artifactId = 'grpc-sdk'
-            version = '1.0.0'
+
+            def commitHash = System.getenv("COMMIT_HASH_SHORT")
+            def releaseVersion = System.getenv("RELEASE_VERSION")
+            version = commitHash ?: releaseVersion ?: 'local'
 
             from components.java
         }
