@@ -10,6 +10,7 @@ import "google/protobuf/duration.proto";
 
 service McPlayer {
   rpc GetPlayer(PlayerRequest) returns (PlayerResponse) {}
+  rpc GetPlayers(PlayersRequest) returns (PlayersResponse) {}
   rpc GetPlayerByUsername(PlayerUsernameRequest) returns (PlayerResponse) {}
   rpc GetPlayerSessions(PageablePlayerRequest) returns (PlayerSessionsResponse) {}
 
@@ -19,6 +20,10 @@ service McPlayer {
 
 message PlayerRequest {
   string player_id = 1;
+}
+
+message PlayersRequest {
+  repeated string player_ids = 1;
 }
 
 message PlayerUsernameRequest {
@@ -39,6 +44,10 @@ message PlayerResponse {
   google.protobuf.Timestamp last_online = 4;
   bool currently_online = 5;
   google.protobuf.Duration play_time = 6;
+}
+
+message PlayersResponse {
+  repeated PlayerResponse players = 1;
 }
 
 message PlayerSessionsResponse {
