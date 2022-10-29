@@ -39,7 +39,8 @@ message PendingFriendListResponse {
 
 message AddFriendRequest {
   string issuer_id = 1;
-  string target_id = 2;
+  string issuer_username = 2;
+  string target_id = 3;
 }
 
 message AddFriendResponse {
@@ -57,7 +58,8 @@ message AddFriendResponse {
 
 message RemoveFriendRequest {
   string issuer_id = 1;
-  string target_id = 2;
+  string issuer_username = 2;
+  string target_id = 3;
 }
 
 message RemoveFriendResponse {
