@@ -1,0 +1,31 @@
+syntax = "proto3";
+package velocity.service;
+
+option java_package = "cc.towerdefence.api.service.velocity";
+option java_outer_classname = "VelocityFriendProto";
+
+import "google/protobuf/empty.proto";
+
+service VelocityFriend {
+  rpc ReceiveFriendRequest(ReceiveFriendRequestRequest) returns (google.protobuf.Empty);
+  rpc ReceiveFriendAdded(ReceiveFriendAddedRequest) returns (google.protobuf.Empty);
+  rpc ReceiveFriendRemoved(ReceiveFriendRemovedRequest) returns (google.protobuf.Empty);
+}
+
+message ReceiveFriendRequestRequest {
+  string sender_id = 1;
+  string sender_username = 2;
+  string recipient_id = 3;
+}
+
+message ReceiveFriendAddedRequest {
+  string sender_id = 1;
+  string sender_username = 2;
+  string recipient_id = 3;
+}
+
+// Username is not needed here as it is not fed back to the user
+message ReceiveFriendRemovedRequest {
+  string sender_id = 1;
+  string recipient_id = 2;
+}

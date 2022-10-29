@@ -9,6 +9,7 @@ import "google/protobuf/timestamp.proto";
 service Friend {
   rpc AddFriend(AddFriendRequest) returns (AddFriendResponse);
   rpc RemoveFriend(RemoveFriendRequest) returns (RemoveFriendResponse);
+  rpc DenyFriendRequest(DenyFriendRequestRequest) returns (DenyFriendRequestResponse);
 
   rpc GetFriendList(PlayerRequest) returns (FriendListResponse);
   rpc GetPendingFriendRequestList(PlayerRequest) returns (PendingFriendListResponse);
@@ -68,4 +69,17 @@ message RemoveFriendResponse {
     NOT_FRIENDS = 1;
   }
   RemoveFriendResult result = 1;
+}
+
+message DenyFriendRequestRequest {
+  string issuer_id = 1;
+  string target_id = 2;
+}
+
+message DenyFriendRequestResponse {
+  enum DenyFriendRequestResult {
+    DENIED = 0;
+    NO_REQUEST = 1;
+  }
+  DenyFriendRequestResult result = 1;
 }
