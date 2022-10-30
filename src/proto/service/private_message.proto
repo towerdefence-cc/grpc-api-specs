@@ -24,5 +24,4 @@ message PrivateMessageResponse {
 
   Status status = 1;
   string message = 2;
-  string recipient_name = 3;
 }
