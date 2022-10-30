@@ -10,9 +10,10 @@ service Friend {
   rpc AddFriend(AddFriendRequest) returns (AddFriendResponse);
   rpc RemoveFriend(RemoveFriendRequest) returns (RemoveFriendResponse);
   rpc DenyFriendRequest(DenyFriendRequestRequest) returns (DenyFriendRequestResponse);
+  rpc MassDenyFriendRequest(MassDenyFriendRequestRequest) returns (MassDenyFriendRequestResponse);
 
   rpc GetFriendList(PlayerRequest) returns (FriendListResponse);
-  rpc GetPendingFriendRequestList(PlayerRequest) returns (PendingFriendListResponse);
+  rpc GetPendingFriendRequestList(GetPendingFriendRequestListRequest) returns (PendingFriendListResponse);
 }
 
 message PlayerRequest {
@@ -26,6 +27,11 @@ message FriendListResponse {
     string id = 1;
     google.protobuf.Timestamp friends_since = 2;
   }
+}
+
+message GetPendingFriendRequestListRequest {
+  string issuer_id = 1;
+  bool incoming = 2;
 }
 
 message PendingFriendListResponse {
@@ -82,4 +88,13 @@ message DenyFriendRequestResponse {
     NO_REQUEST = 1;
   }
   DenyFriendRequestResult result = 1;
+}
+
+message MassDenyFriendRequestRequest {
+  string issuer_id = 1;
+  bool incoming = 2;
+}
+
+message MassDenyFriendRequestResponse {
+  uint32 requests_denied = 1;
 }
