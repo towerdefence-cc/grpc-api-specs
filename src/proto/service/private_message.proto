@@ -10,7 +10,7 @@ service PrivateMessage {
 
 message PrivateMessageRequest {
   string sender_id = 1;
-  string recipient_name = 2;
+  string recipient_id = 2;
   string message = 3;
 }
 

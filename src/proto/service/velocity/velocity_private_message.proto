@@ -12,6 +12,6 @@ service VelocityPrivateMessage {
 
 message PrivateMessage {
   string sender_username = 1;
-  string receiver_id = 2;
+  string recipient_id = 2;
   string message = 3;
 }
