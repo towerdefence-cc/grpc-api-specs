@@ -8,6 +8,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import io.grpc.Status;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -21,6 +22,11 @@ public class PlayerResolver {
             .build();
 
     private static McPlayerGrpc.McPlayerFutureStub playerService;
+
+    public static void setPlayerService(@NotNull McPlayerGrpc.McPlayerFutureStub playerService) {
+        if (PlayerResolver.playerService != null) throw new IllegalStateException("Player service already set");
+        PlayerResolver.playerService = playerService;
+    }
 
     public static void retrievePlayerUuid(String username, Consumer<CachedMcPlayer> callback, Consumer<Status> errorCallback) {
         CachedMcPlayer cacheResult = USERNAME_TO_PLAYER_CACHE.getIfPresent(username);
