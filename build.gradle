@@ -9,7 +9,7 @@ plugins {
 group "cc.towerdefence.api"
 version "1.0"
 
-def grpcVersion = "1.50.0"
+def grpcVersion = "1.50.2"
 def protobufVersion = "3.21.7"
 def protocVersion = protobufVersion
 
@@ -18,9 +18,14 @@ repositories {
 }
 
 dependencies {
-    protobuf("com.google.protobuf:protobuf-java:3.21.7")
-    api("com.google.protobuf:protobuf-java:3.21.7")
+    protobuf("com.google.protobuf:protobuf-java:3.21.8")
+    api("com.google.protobuf:protobuf-java:3.21.8")
     api("org.apache.tomcat:annotations-api:6.0.53")
+
+    compileOnly("org.jetbrains:annotations:23.0.0")
+    annotationProcessor("org.jetbrains:annotations:23.0.0")
+
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.1")
 
     api("io.grpc:grpc-netty:${grpcVersion}")
     api("io.grpc:grpc-stub:${grpcVersion}")
@@ -60,12 +65,12 @@ publishing {
 
     publications {
         maven(MavenPublication) {
-            groupId = 'cc.towerdefence.api'
-            artifactId = 'grpc-sdk'
+            groupId = "cc.towerdefence.api"
+            artifactId = "grpc-sdk"
 
             def commitHash = System.getenv("COMMIT_HASH_SHORT")
             def releaseVersion = System.getenv("RELEASE_VERSION")
-            version = commitHash ?: releaseVersion ?: 'local'
+            version = commitHash ?: releaseVersion ?: "local"
 
             from components.java
         }
