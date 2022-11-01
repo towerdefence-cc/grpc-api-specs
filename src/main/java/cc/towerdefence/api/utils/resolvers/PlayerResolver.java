@@ -15,30 +15,32 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.function.Consumer;
 
 public class PlayerResolver {
-    private static final Cache<String, UUID> USERNAME_TO_UUID_CACHE = Caffeine.newBuilder()
+    private static final Cache<String, CachedMcPlayer> USERNAME_TO_PLAYER_CACHE = Caffeine.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(Duration.ofMinutes(5))
             .build();
 
     private static McPlayerGrpc.McPlayerFutureStub playerService;
 
-    public static void retrievePlayerUuid(String username, Consumer<UUID> callback, Consumer<Status> errorCallback) {
-        UUID cacheResult = USERNAME_TO_UUID_CACHE.getIfPresent(username);
+    public static void retrievePlayerUuid(String username, Consumer<CachedMcPlayer> callback, Consumer<Status> errorCallback) {
+        CachedMcPlayer cacheResult = USERNAME_TO_PLAYER_CACHE.getIfPresent(username);
         if (cacheResult != null) callback.accept(cacheResult);
 
-        requestPlayerUuid(username, uuid -> {
-            USERNAME_TO_UUID_CACHE.put(username, uuid);
+        requestMcPlayer(username, uuid -> {
+            USERNAME_TO_PLAYER_CACHE.put(username, uuid);
             callback.accept(uuid);
         }, errorCallback);
     }
 
-    private static void requestPlayerUuid(String username, Consumer<UUID> callback, Consumer<Status> errorCallback) {
+    private static void requestMcPlayer(String username, Consumer<CachedMcPlayer> callback, Consumer<Status> errorCallback) {
         ListenableFuture<McPlayerProto.PlayerResponse> playerResponseFuture = playerService
                 .getPlayerByUsername(McPlayerProto.PlayerUsernameRequest.newBuilder().setUsername(username).build());
 
         Futures.addCallback(playerResponseFuture, FunctionalFutureCallback.create(
-                playerResponse -> callback.accept(UUID.fromString(playerResponse.getId())),
+                playerResponse -> callback.accept(new CachedMcPlayer(UUID.fromString(playerResponse.getId()), playerResponse.getCurrentUsername())),
                 throwable -> errorCallback.accept(Status.fromThrowable(throwable))
         ), ForkJoinPool.commonPool());
     }
+
+    public record CachedMcPlayer(UUID uuid, String username) {}
 }
