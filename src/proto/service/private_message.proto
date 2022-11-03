@@ -5,7 +5,7 @@ option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PrivateMessageProto";
 
 service PrivateMessage {
-  rpc SendPrivateMessage (PrivateMessageRequest) returns (PrivateMessageResponse);
+  rpc SendPrivateMessage(PrivateMessageRequest) returns (PrivateMessageResponse);
 }
 
 message PrivateMessageRequest {

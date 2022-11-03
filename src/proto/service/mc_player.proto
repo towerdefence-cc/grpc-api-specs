@@ -4,30 +4,20 @@ package service.mc_player;
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "McPlayerProto";
 
-import "google/protobuf/empty.proto"; // unused
+import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 
+import "model/common/player.proto";
+
 service McPlayer {
-  rpc GetPlayer(PlayerRequest) returns (PlayerResponse) {}
-  rpc GetPlayers(PlayersRequest) returns (PlayersResponse) {}
-  rpc GetPlayerByUsername(PlayerUsernameRequest) returns (PlayerResponse) {}
+  rpc GetPlayer(model.common.PlayerRequest) returns (PlayerResponse) {}
+  rpc GetPlayers(model.common.PlayersRequest) returns (PlayersResponse) {}
+  rpc GetPlayerByUsername(model.common.PlayerUsernameRequest) returns (PlayerResponse) {}
   rpc GetPlayerSessions(PageablePlayerRequest) returns (PlayerSessionsResponse) {}
 
   rpc OnPlayerLogin(PlayerLoginRequest) returns (PlayerLoginResponse) {}
   rpc OnPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty) {}
-}
-
-message PlayerRequest {
-  string player_id = 1;
-}
-
-message PlayersRequest {
-  repeated string player_ids = 1;
-}
-
-message PlayerUsernameRequest {
-  string username = 1; // ignore case when using the username
 }
 
 message PageablePlayerRequest {

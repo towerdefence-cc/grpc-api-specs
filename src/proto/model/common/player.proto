@@ -1,0 +1,17 @@
+syntax = "proto3";
+package model.common;
+
+option java_package = "cc.towerdefence.api.model.common";
+option java_outer_classname = "PlayerProto";
+
+message PlayerRequest {
+  string player_id = 1;
+}
+
+message PlayersRequest {
+  repeated string player_ids = 1;
+}
+
+message PlayerUsernameRequest {
+  string username = 1; // ignore case when using the username
+}
