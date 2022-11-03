@@ -5,6 +5,7 @@ option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "FriendProto";
 
 import "google/protobuf/timestamp.proto";
+import "model/common/player.proto";
 
 service Friend {
   rpc AddFriend(AddFriendRequest) returns (AddFriendResponse);
@@ -12,12 +13,8 @@ service Friend {
   rpc DenyFriendRequest(DenyFriendRequestRequest) returns (DenyFriendRequestResponse);
   rpc MassDenyFriendRequest(MassDenyFriendRequestRequest) returns (MassDenyFriendRequestResponse);
 
-  rpc GetFriendList(PlayerRequest) returns (FriendListResponse);
+  rpc GetFriendList(model.common.PlayerRequest) returns (FriendListResponse);
   rpc GetPendingFriendRequestList(GetPendingFriendRequestListRequest) returns (PendingFriendListResponse);
-}
-
-message PlayerRequest {
-  string issuer_id = 1;
 }
 
 message FriendListResponse {

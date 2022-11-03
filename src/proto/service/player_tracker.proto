@@ -5,6 +5,7 @@ option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PlayerTrackerProto";
 
 import "google/protobuf/empty.proto";
+import "model/common/player.proto";
 
 service PlayerTracker {
   rpc ProxyPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
@@ -13,8 +14,8 @@ service PlayerTracker {
   rpc ProxyPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
   // note: there is no ServerPlayerDisconnect - it will be updated upon joining a new server or removed when they dc from the proxy)
 
-  rpc GetPlayerServer(GetPlayerServerRequest) returns (GetPlayerServerResponse);
-  rpc GetPlayerServers(GetPlayerServersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
+  rpc GetPlayerServer(model.common.PlayerRequest) returns (GetPlayerServerResponse);
+  rpc GetPlayerServers(model.common.PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
 
   rpc GetServerPlayerCount(ServerIdRequest) returns (GetServerPlayerCountResponse);
   rpc GetServerPlayers(ServerIdRequest) returns (GetServerPlayersResponse);
@@ -31,16 +32,8 @@ message PlayerDisconnectRequest {
   string server_id = 2;
 }
 
-message GetPlayerServerRequest {
-  string player_id = 1;
-}
-
 message GetPlayerServerResponse {
   optional OnlineServer server = 1;
-}
-
-message GetPlayerServersRequest {
-  repeated string player_ids = 1;
 }
 
 message GetPlayerServersResponse {
