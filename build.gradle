@@ -4,6 +4,7 @@ plugins {
 
     // gRPC
     id "com.google.protobuf" version "0.8.18"
+    id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
 group "cc.towerdefence.api"
@@ -26,6 +27,12 @@ dependencies {
     annotationProcessor("org.jetbrains:annotations:23.0.0")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.1")
+
+    // spring autoconfiguration
+    compileOnly("org.springframework.boot:spring-boot-starter:2.7.5")
+    compileOnly("net.devh:grpc-server-spring-boot-starter:2.13.1.RELEASE") {
+        exclude group: "io.grpc", module: "grpc-netty-shaded"
+    }
 
     api("io.grpc:grpc-netty:${grpcVersion}")
     api("io.grpc:grpc-stub:${grpcVersion}")
