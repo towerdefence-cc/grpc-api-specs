@@ -63,8 +63,8 @@ message RoleUpdateRequest {
   optional string display_prefix = 3;
   optional string display_name = 4;
 
-  repeated string added_permissions = 5;
-  repeated string removed_permissions = 6;
+  repeated PermissionNode set_permissions = 5;
+  repeated string unset_permissions = 6;
 }
 
 message AddRoleToPlayerRequest {
