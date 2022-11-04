@@ -24,7 +24,7 @@ message RoleResponse {
   uint32 priority = 2;
 
   optional string display_prefix = 3;
-  optional string display_name_modifier = 4;
+  optional string display_name = 4;
 
   repeated string permissions = 5;
 }
@@ -42,7 +42,7 @@ message RoleCreateRequest {
   uint32 priority = 2;
 
   optional string display_prefix = 3;
-  optional string display_name_modifier = 4;
+  optional string display_name = 4;
 }
 
 message RoleUpdateRequest {
@@ -50,7 +50,7 @@ message RoleUpdateRequest {
   optional uint32 priority = 2;
 
   optional string display_prefix = 3;
-  optional string display_name_modifier = 4;
+  optional string display_name = 4;
 
   repeated string added_permissions = 5;
   repeated string removed_permissions = 6;
