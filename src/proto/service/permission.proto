@@ -19,6 +19,17 @@ service PermissionService {
   rpc RemoveRoleFromPlayer(RemoveRoleFromPlayerRequest) returns (google.protobuf.Empty);
 }
 
+message PermissionNode {
+  string node = 1;
+
+  enum PermissionState {
+    ALLOW = 0;
+    DENY = 1;
+  }
+
+  PermissionState state = 2;
+}
+
 message RoleResponse {
   string id = 1;
   uint32 priority = 2;
@@ -26,7 +37,7 @@ message RoleResponse {
   optional string display_prefix = 3;
   optional string display_name = 4;
 
-  repeated string permissions = 5;
+  repeated PermissionNode permissions = 5;
 }
 
 message RolesResponse {
