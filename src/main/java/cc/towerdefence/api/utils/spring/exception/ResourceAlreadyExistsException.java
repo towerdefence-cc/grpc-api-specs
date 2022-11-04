@@ -1,20 +1,11 @@
 package cc.towerdefence.api.utils.spring.exception;
 
+import io.grpc.Status;
 import org.jetbrains.annotations.NotNull;
 
-public class ResourceAlreadyExistsException extends RuntimeException {
-    private final @NotNull String description;
+public class ResourceAlreadyExistsException extends GenericGrpcException {
 
     public ResourceAlreadyExistsException(@NotNull String description) {
-        this.description = description;
-    }
-
-    public @NotNull String getDescription() {
-        return this.description;
-    }
-
-    @Override
-    public String getMessage() {
-        return this.getDescription();
+        super(Status.ALREADY_EXISTS, description);
     }
 }
