@@ -1,5 +1,5 @@
 syntax = "proto3";
-package service.playertracker;
+package service.player_tracker;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PlayerTrackerProto";

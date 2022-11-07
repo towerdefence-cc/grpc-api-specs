@@ -14,6 +14,7 @@ service McPlayer {
   rpc GetPlayer(model.common.PlayerRequest) returns (PlayerResponse) {}
   rpc GetPlayers(model.common.PlayersRequest) returns (PlayersResponse) {}
   rpc GetPlayerByUsername(model.common.PlayerUsernameRequest) returns (PlayerResponse) {}
+  rpc SearchPlayerByUsername(PlayerSearchRequest) returns (PlayerSearchResponse) {}
   rpc GetPlayerSessions(PageablePlayerRequest) returns (PlayerSessionsResponse) {}
 
   rpc OnPlayerLogin(PlayerLoginRequest) returns (PlayerLoginResponse) {}
@@ -34,10 +35,24 @@ message PlayerResponse {
   google.protobuf.Timestamp last_online = 4;
   bool currently_online = 5;
   google.protobuf.Duration play_time = 6;
+
+  bool otp_enabled = 7;
 }
 
 message PlayersResponse {
   repeated PlayerResponse players = 1;
+}
+
+message PlayerSearchRequest {
+  string username = 1;
+  uint32 page = 2;
+  uint32 size = 3;
+  bool online_only = 4;
+}
+
+message PlayerSearchResponse {
+  repeated PlayerResponse players = 1;
+  uint32 total_pages = 2;
 }
 
 message PlayerSessionsResponse {
