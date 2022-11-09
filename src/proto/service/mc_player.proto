@@ -3,17 +3,18 @@ package service.mc_player;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "McPlayerProto";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 
-import "model/common/player.proto";
+import "model/player.proto";
 
 service McPlayer {
-  rpc GetPlayer(model.common.PlayerRequest) returns (PlayerResponse) {}
-  rpc GetPlayers(model.common.PlayersRequest) returns (PlayersResponse) {}
-  rpc GetPlayerByUsername(model.common.PlayerUsernameRequest) returns (PlayerResponse) {}
+  rpc GetPlayer(model.PlayerRequest) returns (PlayerResponse) {}
+  rpc GetPlayers(model.PlayersRequest) returns (PlayersResponse) {}
+  rpc GetPlayerByUsername(model.PlayerUsernameRequest) returns (PlayerResponse) {}
   rpc SearchPlayerByUsername(PlayerSearchRequest) returns (PlayerSearchResponse) {}
   rpc GetPlayerSessions(PageablePlayerRequest) returns (PlayerSessionsResponse) {}
 

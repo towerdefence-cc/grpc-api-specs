@@ -3,14 +3,15 @@ package service.permission;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PermissionProto";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
 
 import "google/protobuf/empty.proto";
 
-import "model/common/player.proto";
+import "model/player.proto";
 
 service PermissionService {
   rpc GetRoles(google.protobuf.Empty) returns (RolesResponse);
-  rpc GetPlayerRoles(model.common.PlayerRequest) returns (PlayerRolesResponse);
+  rpc GetPlayerRoles(model.PlayerRequest) returns (PlayerRolesResponse);
 
   rpc CreateRole(RoleCreateRequest) returns (RoleResponse);
   rpc UpdateRole(RoleUpdateRequest) returns (RoleResponse);

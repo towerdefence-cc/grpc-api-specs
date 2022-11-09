@@ -3,10 +3,7 @@ package service.mc_player_security;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "McPlayerSecurityProto";
-
-import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/duration.proto";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
 
 service McPlayerSecurity {
   rpc AddYubiKey(YubikeyRequest) returns (YubikeyResponse) {}
