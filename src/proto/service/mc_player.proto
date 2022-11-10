@@ -34,10 +34,13 @@ message PlayerResponse {
   google.protobuf.Timestamp first_login = 3;
   // If they are currently online this will not be up to date
   google.protobuf.Timestamp last_online = 4;
-  bool currently_online = 5;
-  google.protobuf.Duration play_time = 6;
 
-  bool otp_enabled = 7;
+  bool currently_online = 5;
+  optional PlayerSession current_session = 6;
+
+  google.protobuf.Duration play_time = 7;
+
+  bool otp_enabled = 8;
 }
 
 message PlayersResponse {
@@ -64,18 +67,18 @@ message PlayerSearchResponse {
   uint32 total_pages = 4;
 }
 
+message PlayerSession {
+  string session_id = 1;
+
+  google.protobuf.Timestamp login_time = 2;
+  optional google.protobuf.Timestamp logout_time = 3; // will be null if the player is currently online for this session
+}
+
 message PlayerSessionsResponse {
   repeated PlayerSession sessions = 1;
   uint32 page = 2;
   uint64 total_elements = 3;
   uint32 total_pages = 4;
-
-  message PlayerSession {
-    string session_id = 1;
-
-    google.protobuf.Timestamp login_time = 2;
-    optional google.protobuf.Timestamp logout_time = 3; // will be null if the player is currently online for this session
-  }
 }
 
 message PlayerLoginRequest {
