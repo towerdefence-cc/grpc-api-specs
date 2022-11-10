@@ -15,7 +15,7 @@ service McPlayer {
   rpc GetPlayer(model.PlayerRequest) returns (PlayerResponse) {}
   rpc GetPlayers(model.PlayersRequest) returns (PlayersResponse) {}
   rpc GetPlayerByUsername(model.PlayerUsernameRequest) returns (PlayerResponse) {}
-  rpc SearchPlayerByUsername(PlayerSearchRequest) returns (PlayerSearchResponse) {}
+  rpc SearchPlayersByUsername(PlayerSearchRequest) returns (PlayerSearchResponse) {}
   rpc GetPlayerSessions(PageablePlayerRequest) returns (PlayerSessionsResponse) {}
 
   rpc OnPlayerLogin(PlayerLoginRequest) returns (PlayerLoginResponse) {}
@@ -48,12 +48,19 @@ message PlayerSearchRequest {
   string username = 1;
   uint32 page = 2;
   uint32 size = 3;
-  bool online_only = 4;
+
+  enum FilterMethod {
+    NONE = 0;
+    ONLINE = 1;
+    FRIENDS = 2;
+  }
 }
 
 message PlayerSearchResponse {
   repeated PlayerResponse players = 1;
-  uint32 total_pages = 2;
+  uint32 page = 2;
+  uint32 total_elements = 3;
+  uint32 total_pages = 4;
 }
 
 message PlayerSessionsResponse {
