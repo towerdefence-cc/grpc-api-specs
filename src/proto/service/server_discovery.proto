@@ -12,6 +12,7 @@ Suggested = determine an optimal server to send the player to. E.g the emptier l
  */
 service ServerDiscovery {
   rpc GetSuggestedLobbyServer(google.protobuf.Empty) returns (LobbyServer);
+  rpc GetSuggestedOtpServer(google.protobuf.Empty) returns (ConnectableServer);
 }
 
 message ConnectableServer {
