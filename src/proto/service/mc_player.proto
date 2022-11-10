@@ -47,7 +47,8 @@ message PlayersResponse {
 message PlayerSearchRequest {
   string username = 1;
   uint32 page = 2;
-  uint32 size = 3;
+  uint32 page_size = 3;
+  FilterMethod filter_method = 4;
 
   enum FilterMethod {
     NONE = 0;
