@@ -1,0 +1,40 @@
+syntax = "proto3";
+package towerdefence.cc.service.mc_player;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "McPlayerSecurityProto";
+option go_package = "service/mc_player";
+
+
+service McPlayerSecurity {
+  rpc AddYubiKey(YubikeyRequest) returns (YubikeyResponse) {}
+
+  rpc VerifyYubikey(YubikeyRequest) returns (YubikeyResponse) {}
+}
+
+message YubikeyRequest {
+  string issuer_id = 1;
+  string otp = 2;
+}
+
+message YubikeyResponse {
+  enum Status {
+    // returned by Yubico API
+    OK = 0;
+    BAD_OTP = 1;
+    REPLAYED_OTP = 2;
+    BAD_SIGNATURE = 3;
+    MISSING_PARAMETER = 4;
+    NO_SUCH_CLIENT = 5;
+    OPERATION_NOT_ALLOWED = 6;
+    BACKEND_ERROR = 7;
+    NOT_ENOUGH_ANSWERS = 8;
+    REPLAYED_REQUEST = 9;
+
+    // returned by this service
+    KEY_NOT_LINKED = 100;
+    SECURITY_ERROR = 101;
+  }
+
+  Status status = 1;
+}

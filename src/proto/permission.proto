@@ -1,0 +1,80 @@
+syntax = "proto3";
+package towerdefence.cc.service.permission;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "PermissionProto";
+option go_package = "service/permission";
+
+import "google/protobuf/empty.proto";
+
+service PermissionService {
+  rpc GetRoles(google.protobuf.Empty) returns (RolesResponse);
+  rpc GetPlayerRoles(PlayerRequest) returns (PlayerRolesResponse);
+
+  rpc CreateRole(RoleCreateRequest) returns (RoleResponse);
+  rpc UpdateRole(RoleUpdateRequest) returns (RoleResponse);
+
+  rpc AddRoleToPlayer(AddRoleToPlayerRequest) returns (google.protobuf.Empty);
+  rpc RemoveRoleFromPlayer(RemoveRoleFromPlayerRequest) returns (google.protobuf.Empty);
+}
+
+message PlayerRequest {
+  string player_id = 1;
+}
+message PermissionNode {
+  string node = 1;
+
+  enum PermissionState {
+    ALLOW = 0;
+    DENY = 1;
+  }
+
+  PermissionState state = 2;
+}
+
+message RoleResponse {
+  string id = 1;
+  uint32 priority = 2;
+
+  optional string display_prefix = 3;
+  optional string display_name = 4;
+
+  repeated PermissionNode permissions = 5;
+}
+
+message RolesResponse {
+  repeated RoleResponse roles = 1;
+}
+
+message PlayerRolesResponse {
+  repeated string role_ids = 1;
+}
+
+message RoleCreateRequest {
+  string id = 1;
+  uint32 priority = 2;
+
+  optional string display_prefix = 3;
+  optional string display_name = 4;
+}
+
+message RoleUpdateRequest {
+  string id = 1;
+  optional uint32 priority = 2;
+
+  optional string display_prefix = 3;
+  optional string display_name = 4;
+
+  repeated PermissionNode set_permissions = 5;
+  repeated string unset_permissions = 6;
+}
+
+message AddRoleToPlayerRequest {
+  string player_id = 1;
+  string role_id = 2;
+}
+
+message RemoveRoleFromPlayerRequest {
+  string player_id = 1;
+  string role_id = 2;
+}

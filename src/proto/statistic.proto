@@ -1,0 +1,12 @@
+syntax = "proto3";
+package towerdefence.cc.service.statistic;
+option go_package = "service/statistic";
+
+//
+//option java_package = "cc.towerdefence.api.service";
+//option java_outer_classname = "StatisticProto";
+//option go_package = "service/statistic";
+//
+//import "google/protobuf/empty.proto";
+//
+//// todo future ;)

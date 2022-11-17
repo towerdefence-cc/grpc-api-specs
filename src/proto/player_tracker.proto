@@ -1,0 +1,73 @@
+syntax = "proto3";
+package towerdefence.cc.service.player_tracker;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "PlayerTrackerProto";
+option go_package = "service/player_tracker";
+
+
+import "google/protobuf/empty.proto";
+
+service PlayerTracker {
+  rpc ProxyPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
+  rpc ServerPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the SERVER only
+
+  rpc ProxyPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
+  // note: there is no ServerPlayerDisconnect - it will be updated upon joining a new server or removed when they dc from the proxy)
+
+  rpc GetPlayerServer(PlayerRequest) returns (GetPlayerServerResponse);
+  rpc GetPlayerServers(PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
+
+  rpc GetServerPlayerCount(ServerIdRequest) returns (GetServerPlayerCountResponse);
+  rpc GetServerPlayers(ServerIdRequest) returns (GetServerPlayersResponse);
+}
+
+message PlayerRequest {
+  string player_id = 1;
+}
+
+message PlayersRequest {
+  repeated string player_ids = 1;
+}
+
+message PlayerLoginRequest {
+  string player_id = 1;
+  string player_name = 2;
+  string server_id = 3;
+}
+
+message PlayerDisconnectRequest {
+  string player_id = 1;
+  string server_id = 2;
+}
+
+message GetPlayerServerResponse {
+  optional OnlineServer server = 1;
+}
+
+message GetPlayerServersResponse {
+  map<string, OnlineServer> player_servers = 1; // Is they are not online, they will not be included in the map.
+}
+
+message ServerIdRequest {
+  string server_id = 1;
+}
+
+message GetServerPlayerCountResponse {
+  int32 player_count = 1;
+}
+
+message GetServerPlayersResponse {
+  repeated OnlinePlayer online_players = 1;
+}
+
+message OnlinePlayer {
+  string player_id = 1;
+  string username = 2;
+}
+
+// Represents a server a player is online on, proxy and regular.
+message OnlineServer {
+  string server_id = 1;
+  string proxy_id = 2;
+}

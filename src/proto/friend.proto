@@ -1,0 +1,101 @@
+syntax = "proto3";
+package towerdefence.cc.service.friend;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "FriendProto";
+option go_package = "service/friend";
+
+import "google/protobuf/timestamp.proto";
+
+service Friend {
+  rpc AddFriend(AddFriendRequest) returns (AddFriendResponse);
+  rpc RemoveFriend(RemoveFriendRequest) returns (RemoveFriendResponse);
+  rpc DenyFriendRequest(DenyFriendRequestRequest) returns (DenyFriendRequestResponse);
+  rpc MassDenyFriendRequest(MassDenyFriendRequestRequest) returns (MassDenyFriendRequestResponse);
+
+  rpc GetFriendList(PlayerRequest) returns (FriendListResponse);
+  rpc GetPendingFriendRequestList(GetPendingFriendRequestListRequest) returns (PendingFriendListResponse);
+}
+
+message PlayerRequest {
+  string player_id = 1;
+}
+
+message FriendListResponse {
+  repeated FriendListPlayer friends = 1;
+
+  message FriendListPlayer {
+    string id = 1;
+    google.protobuf.Timestamp friends_since = 2;
+  }
+}
+
+message GetPendingFriendRequestListRequest {
+  string issuer_id = 1;
+  bool incoming = 2;
+}
+
+message PendingFriendListResponse {
+  repeated RequestedFriendPlayer requests = 1;
+
+  message RequestedFriendPlayer {
+    string requester_id = 1;
+    string target_id = 2;
+    google.protobuf.Timestamp request_time = 3;
+  }
+}
+
+message AddFriendRequest {
+  string issuer_id = 1;
+  string issuer_username = 2;
+  string target_id = 3;
+}
+
+message AddFriendResponse {
+  AddFriendResult result = 1;
+  optional google.protobuf.Timestamp friends_since = 2;
+
+  enum AddFriendResult {
+    REQUEST_SENT = 0;
+    FRIEND_ADDED = 1;
+    ALREADY_FRIENDS = 2;
+    ALREADY_REQUESTED = 3;
+    PRIVACY_BLOCKED = 4;
+  }
+}
+
+message RemoveFriendRequest {
+  string issuer_id = 1;
+  string issuer_username = 2;
+  string target_id = 3;
+}
+
+message RemoveFriendResponse {
+  enum RemoveFriendResult {
+    REMOVED = 0;
+    NOT_FRIENDS = 1;
+  }
+  RemoveFriendResult result = 1;
+}
+
+message DenyFriendRequestRequest {
+  string issuer_id = 1;
+  string target_id = 2;
+}
+
+message DenyFriendRequestResponse {
+  enum DenyFriendRequestResult {
+    DENIED = 0;
+    NO_REQUEST = 1;
+  }
+  DenyFriendRequestResult result = 1;
+}
+
+message MassDenyFriendRequestRequest {
+  string issuer_id = 1;
+  bool incoming = 2;
+}
+
+message MassDenyFriendRequestResponse {
+  uint32 requests_denied = 1;
+}
