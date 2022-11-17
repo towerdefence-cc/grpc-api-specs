@@ -1,0 +1,17 @@
+syntax = "proto3";
+package towerdefence.cc.service.velocity.private_message;
+
+option java_package = "cc.towerdefence.api.service.velocity";
+option java_outer_classname = "VelocityServerProto";
+option go_package = "service/velocity/server";
+
+import "google/protobuf/empty.proto";
+
+service VelocityServer {
+  rpc SwapTowerDefence(TowerDefenceSwapRequest) returns (google.protobuf.Empty) {}
+}
+
+message TowerDefenceSwapRequest {
+  string player_id = 1;
+  bool quick_join = 2;
+}
