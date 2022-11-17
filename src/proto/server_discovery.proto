@@ -7,12 +7,14 @@ option go_package = "service/server_discovery";
 
 import "google/protobuf/empty.proto";
 
-/**
-Suggested = determine an optimal server to send the player to. E.g the emptier lobby/proxy, a filling minigame server.
- */
 service ServerDiscovery {
   rpc GetSuggestedLobbyServer(google.protobuf.Empty) returns (LobbyServer);
   rpc GetSuggestedOtpServer(google.protobuf.Empty) returns (ConnectableServer);
+  rpc GetSuggestedTowerDefenceServer(TowerDefenceServerRequest) returns (ConnectableServer);
+}
+
+message TowerDefenceServerRequest {
+  bool in_progress = 1;
 }
 
 message ConnectableServer {

@@ -1,6 +1,5 @@
 package cc.towerdefence.api.utils.resolvers;
 
-import cc.towerdefence.api.model.PlayerProto;
 import cc.towerdefence.api.service.McPlayerGrpc;
 import cc.towerdefence.api.service.McPlayerProto;
 import cc.towerdefence.api.utils.utils.FunctionalFutureCallback;
@@ -54,7 +53,7 @@ public class PlayerResolver {
 
     private static void requestMcPlayer(String username, Consumer<CachedMcPlayer> callback, Consumer<Status> errorCallback) {
         ListenableFuture<McPlayerProto.PlayerResponse> playerResponseFuture = playerService
-                .getPlayerByUsername(PlayerProto.PlayerUsernameRequest.newBuilder().setUsername(username).build());
+                .getPlayerByUsername(McPlayerProto.PlayerUsernameRequest.newBuilder().setUsername(username).build());
 
         Futures.addCallback(playerResponseFuture, FunctionalFutureCallback.create(
                 playerResponse -> callback.accept(new CachedMcPlayer(UUID.fromString(playerResponse.getId()), playerResponse.getCurrentUsername())),
