@@ -1,9 +1,10 @@
 syntax = "proto3";
-package service.mc_player_security;
+package towerdefence.cc.service.mc_player;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "McPlayerSecurityProto";
-option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
+option go_package = "towerdefence.cc/service/mc_player";
+
 
 service McPlayerSecurity {
   rpc AddYubiKey(YubikeyRequest) returns (YubikeyResponse) {}

@@ -1,9 +1,9 @@
 syntax = "proto3";
-package service.friend;
+package towerdefence.cc.service.friend;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "FriendProto";
-option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
+option go_package = "towerdefence.cc/service/friend";
 
 import "google/protobuf/timestamp.proto";
 import "model/player.proto";
@@ -14,7 +14,7 @@ service Friend {
   rpc DenyFriendRequest(DenyFriendRequestRequest) returns (DenyFriendRequestResponse);
   rpc MassDenyFriendRequest(MassDenyFriendRequestRequest) returns (MassDenyFriendRequestResponse);
 
-  rpc GetFriendList(model.PlayerRequest) returns (FriendListResponse);
+  rpc GetFriendList(towerdefence.cc.model.PlayerRequest) returns (FriendListResponse);
   rpc GetPendingFriendRequestList(GetPendingFriendRequestListRequest) returns (PendingFriendListResponse);
 }
 

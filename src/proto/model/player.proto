@@ -1,9 +1,9 @@
 syntax = "proto3";
-package model;
+package towerdefence.cc.model;
 
 option java_package = "cc.towerdefence.api.model";
 option java_outer_classname = "PlayerProto";
-option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/model";
+option go_package = "towerdefence.cc/model";
 
 message PlayerRequest {
   string player_id = 1;

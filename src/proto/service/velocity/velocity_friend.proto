@@ -1,8 +1,10 @@
 syntax = "proto3";
-package velocity.service;
+package towerdefence.cc.service.velocity.friend;
 
 option java_package = "cc.towerdefence.api.service.velocity";
 option java_outer_classname = "VelocityFriendProto";
+option go_package = "towerdefence.cc/service";
+
 
 import "google/protobuf/empty.proto";
 

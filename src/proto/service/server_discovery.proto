@@ -1,9 +1,10 @@
 syntax = "proto3";
-package service.server_discovery;
+package towerdefence.cc.service.server_discovery;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "ServerDiscoveryProto";
-option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
+option go_package = "towerdefence.cc/service/server_discovery";
+
 
 import "google/protobuf/empty.proto";
 

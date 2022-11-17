@@ -1,9 +1,10 @@
 syntax = "proto3";
-package service.player_tracker;
+package towerdefence.cc.service.player_tracker;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PlayerTrackerProto";
-option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
+option go_package = "towerdefence.cc/service/player_tracker";
+
 
 import "google/protobuf/empty.proto";
 import "model/player.proto";
@@ -15,8 +16,8 @@ service PlayerTracker {
   rpc ProxyPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
   // note: there is no ServerPlayerDisconnect - it will be updated upon joining a new server or removed when they dc from the proxy)
 
-  rpc GetPlayerServer(model.PlayerRequest) returns (GetPlayerServerResponse);
-  rpc GetPlayerServers(model.PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
+  rpc GetPlayerServer(towerdefence.cc.model.PlayerRequest) returns (GetPlayerServerResponse);
+  rpc GetPlayerServers(towerdefence.cc.model.PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
 
   rpc GetServerPlayerCount(ServerIdRequest) returns (GetServerPlayerCountResponse);
   rpc GetServerPlayers(ServerIdRequest) returns (GetServerPlayersResponse);

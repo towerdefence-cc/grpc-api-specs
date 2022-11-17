@@ -1,9 +1,10 @@
 syntax = "proto3";
-package service.mc_player;
+package towerdefence.cc.service.mc_player;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "McPlayerProto";
-option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service";
+option go_package = "towerdefence.cc/service/mc_player";
+
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
@@ -12,17 +13,17 @@ import "google/protobuf/duration.proto";
 import "model/player.proto";
 
 service McPlayer {
-  rpc GetPlayer(model.PlayerRequest) returns (PlayerResponse) {}
-  rpc GetPlayers(model.PlayersRequest) returns (PlayersResponse) {}
-  rpc GetPlayerByUsername(model.PlayerUsernameRequest) returns (PlayerResponse) {}
-  rpc SearchPlayersByUsername(PlayerSearchRequest) returns (PlayerSearchResponse) {}
-  rpc GetPlayerSessions(PageablePlayerRequest) returns (PlayerSessionsResponse) {}
+  rpc GetPlayer(towerdefence.cc.model.PlayerRequest) returns (PlayerResponse) {}
+  rpc GetPlayers(towerdefence.cc.model.PlayersRequest) returns (PlayersResponse) {}
+  rpc GetPlayerByUsername(towerdefence.cc.model.PlayerUsernameRequest) returns (PlayerResponse) {}
+  rpc SearchPlayersByUsername(McPlayerSearchRequest) returns (PlayerSearchResponse) {}
+  rpc GetPlayerSessions(McPageablePlayerRequest) returns (PlayerSessionsResponse) {}
 
-  rpc OnPlayerLogin(PlayerLoginRequest) returns (PlayerLoginResponse) {}
-  rpc OnPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty) {}
+  rpc OnPlayerLogin(McPlayerLoginRequest) returns (PlayerLoginResponse) {}
+  rpc OnPlayerDisconnect(McPlayerDisconnectRequest) returns (google.protobuf.Empty) {}
 }
 
-message PageablePlayerRequest {
+message McPageablePlayerRequest {
   string player_id = 1;
   uint32 page = 2;
   uint32 size = 3;
@@ -47,7 +48,7 @@ message PlayersResponse {
   repeated PlayerResponse players = 1;
 }
 
-message PlayerSearchRequest {
+message McPlayerSearchRequest {
   string username = 1;
   uint32 page = 2;
   uint32 page_size = 3;
@@ -81,7 +82,7 @@ message PlayerSessionsResponse {
   uint32 total_pages = 4;
 }
 
-message PlayerLoginRequest {
+message McPlayerLoginRequest {
   string player_id = 1;
   string username = 2;
 }
@@ -90,7 +91,7 @@ message PlayerLoginResponse {
   string session_id = 1;
 }
 
-message PlayerDisconnectRequest {
+message McPlayerDisconnectRequest {
   string player_id = 1;
   string session_id = 2;
 }

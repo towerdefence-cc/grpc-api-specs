@@ -1,0 +1,27 @@
+syntax = "proto3";
+package towerdefence.cc.service.td_player;
+option go_package = "towerdefence.cc/service/td_player";
+
+//
+//option java_package = "cc.towerdefence.api.service";
+//option java_outer_classname = "TdPlayerProto";
+//option go_package = "service/td_player";
+//
+//import "google/protobuf/empty.proto";
+//
+//service TdPlayer {
+//
+//}
+//
+//message TdPlayerResponse {
+//  string id = 1;
+//  HealthDisplay health_display = 2;
+//  double particle_spacing = 3; // note this is used as an ENUM in the implementation. A double is just easier for forwards compatibility.
+//  float fly_speed = 4; // save reason to not use an ENUM here
+//  bool damage_indicators = 5;
+//
+//  enum HealthDisplay {
+//    RAW = 0;
+//    PERCENTAGE = 1;
+//  }
+//}
