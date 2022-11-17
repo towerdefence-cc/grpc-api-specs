@@ -5,7 +5,6 @@ option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PrivateMessageProto";
 option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/private_message";
 
-
 service PrivateMessage {
   rpc SendPrivateMessage(PrivateMessageRequest) returns (PrivateMessageResponse);
 }

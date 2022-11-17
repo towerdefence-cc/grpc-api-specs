@@ -5,10 +5,6 @@ option java_package = "cc.towerdefence.api.model";
 option java_outer_classname = "PlayerProto";
 option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/model";
 
-message PlayerRequest {
-  string player_id = 1;
-}
-
 message PlayersRequest {
   repeated string player_ids = 1;
 }

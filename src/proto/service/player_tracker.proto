@@ -7,7 +7,6 @@ option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/serv
 
 
 import "google/protobuf/empty.proto";
-import "model/player.proto";
 
 service PlayerTracker {
   rpc ProxyPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
@@ -16,11 +15,19 @@ service PlayerTracker {
   rpc ProxyPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
   // note: there is no ServerPlayerDisconnect - it will be updated upon joining a new server or removed when they dc from the proxy)
 
-  rpc GetPlayerServer(towerdefence.cc.model.PlayerRequest) returns (GetPlayerServerResponse);
-  rpc GetPlayerServers(towerdefence.cc.model.PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
+  rpc GetPlayerServer(PlayerRequest) returns (GetPlayerServerResponse);
+  rpc GetPlayerServers(PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
 
   rpc GetServerPlayerCount(ServerIdRequest) returns (GetServerPlayerCountResponse);
   rpc GetServerPlayers(ServerIdRequest) returns (GetServerPlayersResponse);
+}
+
+message PlayerRequest {
+  string player_id = 1;
+}
+
+message PlayersRequest {
+  repeated string player_ids = 1;
 }
 
 message PlayerLoginRequest {

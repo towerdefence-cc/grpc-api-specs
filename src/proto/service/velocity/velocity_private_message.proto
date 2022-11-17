@@ -5,7 +5,6 @@ option java_package = "cc.towerdefence.api.service.velocity";
 option java_outer_classname = "VelocityPrivateMessageProto";
 option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/velocity/private_message";
 
-
 import "google/protobuf/empty.proto";
 
 service VelocityPrivateMessage {
