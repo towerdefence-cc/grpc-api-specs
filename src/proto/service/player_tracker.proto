@@ -3,7 +3,7 @@ package towerdefence.cc.service.player_tracker;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PlayerTrackerProto";
-option go_package = "towerdefence.cc/service/player_tracker";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/player_tracker";
 
 
 import "google/protobuf/empty.proto";

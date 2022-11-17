@@ -3,7 +3,7 @@ package towerdefence.cc.service.friend;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "FriendProto";
-option go_package = "towerdefence.cc/service/friend";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/friend";
 
 import "google/protobuf/timestamp.proto";
 import "model/player.proto";

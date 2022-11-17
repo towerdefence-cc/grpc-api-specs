@@ -1,6 +1,6 @@
 syntax = "proto3";
 package towerdefence.cc.service.statistic;
-option go_package = "towerdefence.cc/service/statistic";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/statistic";
 
 //
 //option java_package = "cc.towerdefence.api.service";

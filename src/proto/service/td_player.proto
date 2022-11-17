@@ -1,6 +1,6 @@
 syntax = "proto3";
 package towerdefence.cc.service.td_player;
-option go_package = "towerdefence.cc/service/td_player";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/td_player";
 
 //
 //option java_package = "cc.towerdefence.api.service";

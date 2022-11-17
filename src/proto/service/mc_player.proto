@@ -3,7 +3,7 @@ package towerdefence.cc.service.mc_player;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "McPlayerProto";
-option go_package = "towerdefence.cc/service/mc_player";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/mc_player";
 
 
 import "google/protobuf/empty.proto";

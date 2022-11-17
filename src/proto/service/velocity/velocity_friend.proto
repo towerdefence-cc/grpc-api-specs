@@ -3,8 +3,7 @@ package towerdefence.cc.service.velocity.friend;
 
 option java_package = "cc.towerdefence.api.service.velocity";
 option java_outer_classname = "VelocityFriendProto";
-option go_package = "towerdefence.cc/service";
-
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/velocity/friend";
 
 import "google/protobuf/empty.proto";
 

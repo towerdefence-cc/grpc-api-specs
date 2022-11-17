@@ -3,7 +3,7 @@ package towerdefence.cc.service.permission;
 
 option java_package = "cc.towerdefence.api.service";
 option java_outer_classname = "PermissionProto";
-option go_package = "towerdefence.cc/service/permission";
+option go_package = "github.com/towerdefence-cc/grpc-api-specs/generated/go/service/permission";
 
 
 import "google/protobuf/empty.proto";
