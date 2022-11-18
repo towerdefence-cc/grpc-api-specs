@@ -59,10 +59,12 @@ message PlayersResponse {
 }
 
 message McPlayerSearchRequest {
-  string username = 1;
-  uint32 page = 2;
-  uint32 page_size = 3;
-  FilterMethod filter_method = 4;
+  string issuer_id = 1;
+  string search_username = 2;
+  // starts with 0
+  uint32 page = 3;
+  uint32 page_size = 4;
+  FilterMethod filter_method = 5;
 
   enum FilterMethod {
     NONE = 0;
