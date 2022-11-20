@@ -7,6 +7,7 @@ option go_package = "service/player_tracker";
 
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 service PlayerTracker {
   rpc ProxyPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
@@ -18,8 +19,10 @@ service PlayerTracker {
   rpc GetPlayerServer(PlayerRequest) returns (GetPlayerServerResponse);
   rpc GetPlayerServers(PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
 
-  rpc GetServerPlayerCount(ServerIdRequest) returns (GetServerPlayerCountResponse);
   rpc GetServerPlayers(ServerIdRequest) returns (GetServerPlayersResponse);
+
+  rpc GetServerPlayerCount(ServerIdRequest) returns (GetServerPlayerCountResponse);
+  rpc GetServerTypePlayerCount(ServerTypeRequest) returns (GetServerTypePlayerCountResponse);
 }
 
 message PlayerRequest {
@@ -53,10 +56,6 @@ message ServerIdRequest {
   string server_id = 1;
 }
 
-message GetServerPlayerCountResponse {
-  int32 player_count = 1;
-}
-
 message GetServerPlayersResponse {
   repeated OnlinePlayer online_players = 1;
 }
@@ -70,4 +69,17 @@ message OnlinePlayer {
 message OnlineServer {
   string server_id = 1;
   string proxy_id = 2;
+}
+
+message GetServerPlayerCountResponse {
+  int32 player_count = 1;
+}
+
+message ServerTypeRequest {
+  string server_type = 1;
+}
+
+message GetServerTypePlayerCountResponse {
+  int32 player_count = 1;
+  google.protobuf.Timestamp last_updated = 2;
 }
