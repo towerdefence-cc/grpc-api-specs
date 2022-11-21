@@ -14,6 +14,8 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -21,6 +23,7 @@ import java.util.function.Function;
 // We directly return the optionals here, so it's functionally identical
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class GrpcStubCollection {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GrpcStubCollection.class);
     private static final boolean DEVELOPMENT = System.getenv("KUBERNETES_SERVICE_HOST") == null;
 
     private static final Function<String, String> HOST = string -> {
@@ -51,10 +54,13 @@ public class GrpcStubCollection {
      * @return Optional of a ManagedChannel, empty if service is not enabled.
      */
     private static Optional<ManagedChannel> createChannel(String name) {
-        String portEnvVarName = name.toUpperCase().replace('-', '_') + "SVC_PORT";
+        String portEnvVarName = name.toUpperCase().replace('-', '_') + "_SERVICE_PORT_GRPC";
         String portEnvVarValue = System.getenv(portEnvVarName);
 
-        if (portEnvVarValue == null) return Optional.empty();
+        if (portEnvVarValue == null) {
+            LOGGER.warn("Service {} is not enabled, skipping", name);
+            return Optional.empty();
+        };
         int port = Integer.parseInt(System.getenv(portEnvVarName));
 
         return Optional.of(ManagedChannelBuilder.forAddress(HOST.apply(name), port)
