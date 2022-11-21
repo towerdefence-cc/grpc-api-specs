@@ -1,0 +1,33 @@
+// It is necessary to have a service for moving players around
+// to handle integrations such as parties and communicating with
+// the correct proxy for each player.
+
+syntax = "proto3";
+package towerdefence.cc.service.player_transporter;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "PlayerTransporterProto";
+option go_package = "service/player_transporter";
+
+import "google/protobuf/empty.proto";
+
+service PlayerTransporter {
+  rpc CommonMovePlayer (MoveRequest) returns (google.protobuf.Empty) {}
+  rpc TowerDefenceGameMovePlayer (TowerDefenceGameMoveRequest) returns (google.protobuf.Empty) {}
+}
+
+// only some server types can be used in common
+enum RestrictedServerType {
+  LOBBY = 0;
+}
+
+message MoveRequest {
+  repeated string player_ids = 1;
+  RestrictedServerType server_type = 2;
+}
+
+message TowerDefenceGameMoveRequest {
+  repeated string player_ids = 1;
+  bool fast_join = 2;
+}
+

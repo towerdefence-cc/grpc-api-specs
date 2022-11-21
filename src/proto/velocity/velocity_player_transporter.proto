@@ -1,0 +1,18 @@
+syntax = "proto3";
+package towerdefence.cc.service.velocity.player_transporter;
+
+option java_package = "cc.towerdefence.api.service.velocity";
+option java_outer_classname = "VelocityPlayerTransporterProto";
+option go_package = "service/velocity/player_transporter";
+
+import "google/protobuf/empty.proto";
+import "server_discovery.proto";
+
+service VelocityPlayerTransporter {
+  rpc SendToServer(TransportRequest) returns (google.protobuf.Empty);
+}
+
+message TransportRequest {
+  towerdefence.cc.service.server_discovery.ConnectableServer server = 1;
+  repeated string player_ids = 2;
+}

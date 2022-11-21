@@ -1,5 +1,5 @@
 syntax = "proto3";
-package towerdefence.cc.service.velocity.private_message;
+package towerdefence.cc.service.velocity.server;
 
 option java_package = "cc.towerdefence.api.service.velocity";
 option java_outer_classname = "VelocityServerProto";

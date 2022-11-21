@@ -8,13 +8,19 @@ option go_package = "service/server_discovery";
 import "google/protobuf/empty.proto";
 
 service ServerDiscovery {
-  rpc GetSuggestedLobbyServer(google.protobuf.Empty) returns (LobbyServer);
+  rpc GetSuggestedLobbyServer(ServerRequest) returns (LobbyServer);
   rpc GetSuggestedOtpServer(google.protobuf.Empty) returns (ConnectableServer);
   rpc GetSuggestedTowerDefenceServer(TowerDefenceServerRequest) returns (ConnectableServer);
 }
 
+message ServerRequest {
+  int64 player_count = 1;
+  optional bool ensure_same_server = 2;
+}
+
 message TowerDefenceServerRequest {
-  bool in_progress = 1;
+  int64 player_count = 1;
+  bool in_progress = 2;
 }
 
 message ConnectableServer {
