@@ -1,17 +1,19 @@
 plugins {
-    id "java-library"
-    id "maven-publish"
+    id("java-library")
+    id("maven-publish")
 
     // gRPC
-    id "com.google.protobuf" version "0.8.18"
+    id("com.google.protobuf") version "0.8.18"
+
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    id("io.freefair.lombok") version "6.5.1"
 }
 
 group "cc.towerdefence.api"
 version "1.0"
 
 def grpcVersion = "1.50.2"
-def protobufVersion = "3.21.7"
+def protobufVersion = "3.21.9"
 def protocVersion = protobufVersion
 
 repositories {
@@ -19,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    protobuf("com.google.protobuf:protobuf-java:3.21.8")
+    protobuf("com.google.protobuf:protobuf-java:${protobufVersion}")
     api("com.google.protobuf:protobuf-java:3.21.8")
     api("org.apache.tomcat:annotations-api:6.0.53")
 
