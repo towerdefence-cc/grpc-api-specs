@@ -5,6 +5,7 @@ import cc.towerdefence.api.service.McPlayerGrpc;
 import cc.towerdefence.api.service.McPlayerSecurityGrpc;
 import cc.towerdefence.api.service.PermissionServiceGrpc;
 import cc.towerdefence.api.service.PlayerTrackerGrpc;
+import cc.towerdefence.api.service.PlayerTransporterGrpc;
 import cc.towerdefence.api.service.PrivateMessageGrpc;
 import cc.towerdefence.api.service.ServerDiscoveryGrpc;
 import cc.towerdefence.api.service.velocity.VelocityFriendGrpc;
@@ -36,6 +37,7 @@ public class GrpcStubCollection {
     private static final @NotNull @Getter Optional<McPlayerSecurityGrpc.McPlayerSecurityFutureStub> playerSecurityService;
     private static final @NotNull @Getter Optional<PermissionServiceGrpc.PermissionServiceFutureStub> permissionService;
     private static final @NotNull @Getter Optional<PlayerTrackerGrpc.PlayerTrackerFutureStub> playerTrackerService;
+    private static final @NotNull @Getter Optional<PlayerTransporterGrpc.PlayerTransporterFutureStub> playerTransporterService;
     private static final @NotNull @Getter Optional<PrivateMessageGrpc.PrivateMessageFutureStub> privateMessageService;
     private static final @NotNull @Getter Optional<ServerDiscoveryGrpc.ServerDiscoveryFutureStub> serverDiscoveryService;
 
@@ -45,6 +47,7 @@ public class GrpcStubCollection {
         playerSecurityService = createChannel("mc-player-security").map(McPlayerSecurityGrpc::newFutureStub);
         permissionService = createChannel("permission").map(PermissionServiceGrpc::newFutureStub);
         playerTrackerService = createChannel("player-tracker").map(PlayerTrackerGrpc::newFutureStub);
+        playerTransporterService = createChannel("player-transporter").map(PlayerTransporterGrpc::newFutureStub);
         privateMessageService = createChannel("private-message").map(PrivateMessageGrpc::newFutureStub);
         serverDiscoveryService = createChannel("server-discovery").map(ServerDiscoveryGrpc::newFutureStub);
     }

@@ -2,13 +2,13 @@ package cc.towerdefence.api.utils.resolvers;
 
 import cc.towerdefence.api.service.McPlayerGrpc;
 import cc.towerdefence.api.service.McPlayerProto;
+import cc.towerdefence.api.utils.GrpcStubCollection;
 import cc.towerdefence.api.utils.utils.FunctionalFutureCallback;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import io.grpc.Status;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -23,20 +23,19 @@ public class PlayerResolver {
             .expireAfterWrite(Duration.ofMinutes(5))
             .build();
 
-    private static McPlayerGrpc.McPlayerFutureStub playerService;
+    private final static McPlayerGrpc.McPlayerFutureStub PLAYER_SERVICE = GrpcStubCollection.getPlayerService().orElse(null);
     // The alternative should be used as a server software specific option to avoid calling the mc-player service if they're on the same server.
-    private static Function<String, CachedMcPlayer> alternativeUsernameResolver;
+    private static Function<String, CachedMcPlayer> platformUsernameResolver;
 
-    public static void setPlayerService(@NotNull McPlayerGrpc.McPlayerFutureStub playerService, Function<String, CachedMcPlayer> alternativeUsernameResolver) {
-        if (PlayerResolver.playerService != null) throw new IllegalStateException("Player service already set");
-        PlayerResolver.playerService = playerService;
-        PlayerResolver.alternativeUsernameResolver = alternativeUsernameResolver;
+    public static void setPlatformUsernameResolver(Function<String, CachedMcPlayer> platformUsernameResolver) {
+        if (PlayerResolver.platformUsernameResolver != null) throw new IllegalStateException("Player service already set");
+        PlayerResolver.platformUsernameResolver = platformUsernameResolver;
     }
 
     public static void retrievePlayerData(String username, Consumer<CachedMcPlayer> callback, Consumer<Status> errorCallback) {
         String usernameLowercase = username.toLowerCase();
 
-        CachedMcPlayer alternativeOption = alternativeUsernameResolver.apply(usernameLowercase);
+        CachedMcPlayer alternativeOption = platformUsernameResolver.apply(usernameLowercase);
         if (alternativeOption != null) {
             callback.accept(alternativeOption);
             return;
@@ -52,7 +51,7 @@ public class PlayerResolver {
     }
 
     private static void requestMcPlayer(String username, Consumer<CachedMcPlayer> callback, Consumer<Status> errorCallback) {
-        ListenableFuture<McPlayerProto.PlayerResponse> playerResponseFuture = playerService
+        ListenableFuture<McPlayerProto.PlayerResponse> playerResponseFuture = PLAYER_SERVICE
                 .getPlayerByUsername(McPlayerProto.PlayerUsernameRequest.newBuilder().setUsername(username).build());
 
         Futures.addCallback(playerResponseFuture, FunctionalFutureCallback.create(
