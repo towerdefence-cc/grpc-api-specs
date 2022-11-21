@@ -51,7 +51,7 @@ public class GrpcStubCollection {
      * @return Optional of a ManagedChannel, empty if service is not enabled.
      */
     private static Optional<ManagedChannel> createChannel(String name) {
-        String portEnvVarName = name.toUpperCase().replace('-', '_') + "_PORT";
+        String portEnvVarName = name.toUpperCase().replace('-', '_') + "_PORT_GRPC";
         String portEnvVarValue = System.getenv(portEnvVarName);
 
         if (portEnvVarValue == null) return Optional.empty();
