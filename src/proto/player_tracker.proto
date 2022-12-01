@@ -72,7 +72,7 @@ message OnlineServer {
 }
 
 message GetServerPlayerCountResponse {
-  int32 player_count = 1;
+  uint32 player_count = 1;
 }
 
 message ServerTypeRequest {
@@ -80,6 +80,6 @@ message ServerTypeRequest {
 }
 
 message GetServerTypePlayerCountResponse {
-  int32 player_count = 1;
+  uint32 player_count = 1;
   google.protobuf.Timestamp last_updated = 2;
 }

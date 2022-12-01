@@ -1,0 +1,63 @@
+syntax = "proto3";
+package towerdefence.cc.service.game_tracker;
+
+option java_package = "cc.towerdefence.api.service";
+option java_outer_classname = "GameTrackerProto";
+option go_package = "service/game_tracker";
+
+service GameTracker {
+  rpc GetPlayerGameHistory(PagedPlayerRequest) returns (PlayerGameHistoryResponse) {}
+  rpc GetPlayerLiveGame(PlayerRequest) returns (LiveGame) {}
+}
+
+message HistoricGame {
+  string game_id = 1;
+  Mode mode = 2;
+
+  oneof game_type {
+    HistoricTowerDefenceGame tower_defence = 3;
+  }
+}
+
+message LiveGame {
+  string game_id = 1;
+  Mode mode = 2;
+
+  oneof game_type {
+    LiveTowerDefenceGame tower_defence = 3;
+  }
+}
+
+message LiveTowerDefenceGame {
+  uint32 red_health = 1;
+  uint32 blue_health = 2;
+  repeated string player_ids = 3;
+}
+
+message HistoricTowerDefenceGame {
+  uint32 red_health = 1;
+  uint32 blue_health = 2;
+  repeated string player_ids = 3;
+}
+
+enum Mode {
+  TowerDefenceGame = 0;
+}
+
+message PlayerRequest {
+  string player_id = 1;
+}
+
+message PagedPlayerRequest {
+  string player_id = 1;
+  uint32 page = 2;
+  uint32 page_size = 3;
+}
+
+message PlayerGameHistoryResponse {
+  uint32 page = 1;
+  uint32 page_size = 2;
+  uint32 total_pages = 3;
+  uint32 total_elements = 4;
+  repeated HistoricGame games = 5;
+}
