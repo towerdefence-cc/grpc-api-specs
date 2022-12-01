@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,9 +22,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PlayerTrackerClient interface {
-	ProxyPlayerLogin(ctx context.Context, in *PlayerLoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	ServerPlayerLogin(ctx context.Context, in *PlayerLoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	ProxyPlayerDisconnect(ctx context.Context, in *PlayerDisconnectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetPlayerServer(ctx context.Context, in *PlayerRequest, opts ...grpc.CallOption) (*GetPlayerServerResponse, error)
 	GetPlayerServers(ctx context.Context, in *PlayersRequest, opts ...grpc.CallOption) (*GetPlayerServersResponse, error)
 	GetServerPlayers(ctx context.Context, in *ServerIdRequest, opts ...grpc.CallOption) (*GetServerPlayersResponse, error)
@@ -39,33 +35,6 @@ type playerTrackerClient struct {
 
 func NewPlayerTrackerClient(cc grpc.ClientConnInterface) PlayerTrackerClient {
 	return &playerTrackerClient{cc}
-}
-
-func (c *playerTrackerClient) ProxyPlayerLogin(ctx context.Context, in *PlayerLoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/towerdefence.cc.service.player_tracker.PlayerTracker/ProxyPlayerLogin", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *playerTrackerClient) ServerPlayerLogin(ctx context.Context, in *PlayerLoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/towerdefence.cc.service.player_tracker.PlayerTracker/ServerPlayerLogin", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *playerTrackerClient) ProxyPlayerDisconnect(ctx context.Context, in *PlayerDisconnectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/towerdefence.cc.service.player_tracker.PlayerTracker/ProxyPlayerDisconnect", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *playerTrackerClient) GetPlayerServer(ctx context.Context, in *PlayerRequest, opts ...grpc.CallOption) (*GetPlayerServerResponse, error) {
@@ -117,9 +86,6 @@ func (c *playerTrackerClient) GetServerTypePlayerCount(ctx context.Context, in *
 // All implementations must embed UnimplementedPlayerTrackerServer
 // for forward compatibility
 type PlayerTrackerServer interface {
-	ProxyPlayerLogin(context.Context, *PlayerLoginRequest) (*emptypb.Empty, error)
-	ServerPlayerLogin(context.Context, *PlayerLoginRequest) (*emptypb.Empty, error)
-	ProxyPlayerDisconnect(context.Context, *PlayerDisconnectRequest) (*emptypb.Empty, error)
 	GetPlayerServer(context.Context, *PlayerRequest) (*GetPlayerServerResponse, error)
 	GetPlayerServers(context.Context, *PlayersRequest) (*GetPlayerServersResponse, error)
 	GetServerPlayers(context.Context, *ServerIdRequest) (*GetServerPlayersResponse, error)
@@ -132,15 +98,6 @@ type PlayerTrackerServer interface {
 type UnimplementedPlayerTrackerServer struct {
 }
 
-func (UnimplementedPlayerTrackerServer) ProxyPlayerLogin(context.Context, *PlayerLoginRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProxyPlayerLogin not implemented")
-}
-func (UnimplementedPlayerTrackerServer) ServerPlayerLogin(context.Context, *PlayerLoginRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ServerPlayerLogin not implemented")
-}
-func (UnimplementedPlayerTrackerServer) ProxyPlayerDisconnect(context.Context, *PlayerDisconnectRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProxyPlayerDisconnect not implemented")
-}
 func (UnimplementedPlayerTrackerServer) GetPlayerServer(context.Context, *PlayerRequest) (*GetPlayerServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlayerServer not implemented")
 }
@@ -167,60 +124,6 @@ type UnsafePlayerTrackerServer interface {
 
 func RegisterPlayerTrackerServer(s grpc.ServiceRegistrar, srv PlayerTrackerServer) {
 	s.RegisterService(&PlayerTracker_ServiceDesc, srv)
-}
-
-func _PlayerTracker_ProxyPlayerLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlayerLoginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlayerTrackerServer).ProxyPlayerLogin(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/towerdefence.cc.service.player_tracker.PlayerTracker/ProxyPlayerLogin",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerTrackerServer).ProxyPlayerLogin(ctx, req.(*PlayerLoginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PlayerTracker_ServerPlayerLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlayerLoginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlayerTrackerServer).ServerPlayerLogin(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/towerdefence.cc.service.player_tracker.PlayerTracker/ServerPlayerLogin",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerTrackerServer).ServerPlayerLogin(ctx, req.(*PlayerLoginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PlayerTracker_ProxyPlayerDisconnect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlayerDisconnectRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlayerTrackerServer).ProxyPlayerDisconnect(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/towerdefence.cc.service.player_tracker.PlayerTracker/ProxyPlayerDisconnect",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerTrackerServer).ProxyPlayerDisconnect(ctx, req.(*PlayerDisconnectRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _PlayerTracker_GetPlayerServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -320,18 +223,6 @@ var PlayerTracker_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "towerdefence.cc.service.player_tracker.PlayerTracker",
 	HandlerType: (*PlayerTrackerServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "ProxyPlayerLogin",
-			Handler:    _PlayerTracker_ProxyPlayerLogin_Handler,
-		},
-		{
-			MethodName: "ServerPlayerLogin",
-			Handler:    _PlayerTracker_ServerPlayerLogin_Handler,
-		},
-		{
-			MethodName: "ProxyPlayerDisconnect",
-			Handler:    _PlayerTracker_ProxyPlayerDisconnect_Handler,
-		},
 		{
 			MethodName: "GetPlayerServer",
 			Handler:    _PlayerTracker_GetPlayerServer_Handler,

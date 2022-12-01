@@ -10,11 +10,11 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 service PlayerTracker {
-  rpc ProxyPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
-  rpc ServerPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the SERVER only
-
-  rpc ProxyPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
-  // note: there is no ServerPlayerDisconnect - it will be updated upon joining a new server or removed when they dc from the proxy)
+//  rpc ProxyPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
+//  rpc ServerPlayerLogin(PlayerLoginRequest) returns (google.protobuf.Empty); // should be fired by the SERVER only
+//
+//  rpc ProxyPlayerDisconnect(PlayerDisconnectRequest) returns (google.protobuf.Empty); // should be fired by the PROXY only
+//  // note: there is no ServerPlayerDisconnect - it will be updated upon joining a new server or removed when they dc from the proxy)
 
   rpc GetPlayerServer(PlayerRequest) returns (GetPlayerServerResponse);
   rpc GetPlayerServers(PlayersRequest) returns (GetPlayerServersResponse); // mass retrieve servers for x... players
