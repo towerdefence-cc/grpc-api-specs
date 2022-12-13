@@ -61,7 +61,7 @@ public class GrpcStubCollection {
      */
     private static Optional<ManagedChannel> createChannel(String name) {
         if (!DEVELOPMENT) {
-            return Optional.of(ManagedChannelBuilder.forAddress(name, 9091)
+            return Optional.of(ManagedChannelBuilder.forAddress(name, 9090)
                     .defaultLoadBalancingPolicy("round_robin")
                     .usePlaintext()
                     .build());
