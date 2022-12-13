@@ -25,21 +25,24 @@ import java.util.function.Function;
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class GrpcStubCollection {
     private static final Logger LOGGER = LoggerFactory.getLogger(GrpcStubCollection.class);
-    private static final boolean DEVELOPMENT = System.getenv("KUBERNETES_SERVICE_HOST") == null;
+    private static final boolean DEVELOPMENT = System.getenv("HOSTNAME") == null;
 
-    private static final Function<String, String> HOST = string -> {
-        if (DEVELOPMENT) return "localhost";
-        return string + ".towerdefence.svc";
-    };
-
-    private static final @NotNull @Getter Optional<FriendGrpc.FriendFutureStub> friendService;
-    private static final @NotNull @Getter Optional<McPlayerGrpc.McPlayerFutureStub> playerService;
-    private static final @NotNull @Getter Optional<McPlayerSecurityGrpc.McPlayerSecurityFutureStub> playerSecurityService;
-    private static final @NotNull @Getter Optional<PermissionServiceGrpc.PermissionServiceFutureStub> permissionService;
-    private static final @NotNull @Getter Optional<PlayerTrackerGrpc.PlayerTrackerFutureStub> playerTrackerService;
-    private static final @NotNull @Getter Optional<PlayerTransporterGrpc.PlayerTransporterFutureStub> playerTransporterService;
-    private static final @NotNull @Getter Optional<PrivateMessageGrpc.PrivateMessageFutureStub> privateMessageService;
-    private static final @NotNull @Getter Optional<ServerDiscoveryGrpc.ServerDiscoveryFutureStub> serverDiscoveryService;
+    @Getter
+    private static final @NotNull Optional<FriendGrpc.FriendFutureStub> friendService;
+    @Getter
+    private static final @NotNull Optional<McPlayerGrpc.McPlayerFutureStub> playerService;
+    @Getter
+    private static final @NotNull Optional<McPlayerSecurityGrpc.McPlayerSecurityFutureStub> playerSecurityService;
+    @Getter
+    private static final @NotNull Optional<PermissionServiceGrpc.PermissionServiceFutureStub> permissionService;
+    @Getter
+    private static final @NotNull Optional<PlayerTrackerGrpc.PlayerTrackerFutureStub> playerTrackerService;
+    @Getter
+    private static final @NotNull Optional<PlayerTransporterGrpc.PlayerTransporterFutureStub> playerTransporterService;
+    @Getter
+    private static final @NotNull Optional<PrivateMessageGrpc.PrivateMessageFutureStub> privateMessageService;
+    @Getter
+    private static final @NotNull Optional<ServerDiscoveryGrpc.ServerDiscoveryFutureStub> serverDiscoveryService;
 
     static {
         friendService = createChannel("friend-manager").map(FriendGrpc::newFutureStub);
@@ -57,18 +60,22 @@ public class GrpcStubCollection {
      * @return Optional of a ManagedChannel, empty if service is not enabled.
      */
     private static Optional<ManagedChannel> createChannel(String name) {
-        String portEnvVarName = name.toUpperCase().replace('-', '_') + "_SERVICE_PORT_GRPC";
-        String portEnvVarValue = System.getenv(portEnvVarName);
+        if (!DEVELOPMENT) {
+            return Optional.of(ManagedChannelBuilder.forAddress(name, 9091)
+                    .defaultLoadBalancingPolicy("round_robin")
+                    .usePlaintext()
+                    .build());
+        }
+        String envPort = System.getenv(name + "-port"); // only used for dev
 
-        if (portEnvVarValue == null) {
+        if (envPort == null) {
             LOGGER.warn("Service {} is not enabled, skipping", name);
             return Optional.empty();
-        };
-        int port = Integer.parseInt(System.getenv(portEnvVarName));
-
-        return Optional.of(ManagedChannelBuilder.forAddress(HOST.apply(name), port)
-                .defaultLoadBalancingPolicy("round_robin")
-                .usePlaintext()
-                .build());
+        } else {
+            int port = Integer.parseInt(envPort);
+            return Optional.of(ManagedChannelBuilder.forAddress("localhost", port)
+                    .usePlaintext()
+                    .build());
+        }
     }
 }
