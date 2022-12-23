@@ -25,10 +25,10 @@ dependencies {
     api("com.google.protobuf:protobuf-java:3.21.8")
     api("org.apache.tomcat:annotations-api:6.0.53")
 
-    compileOnly("org.jetbrains:annotations:23.0.0")
-    annotationProcessor("org.jetbrains:annotations:23.0.0")
+    compileOnly('org.jetbrains:annotations:23.1.0')
+    annotationProcessor('org.jetbrains:annotations:23.1.0')
 
-    implementation("com.github.ben-manes.caffeine:caffeine:3.1.1")
+    implementation('com.github.ben-manes.caffeine:caffeine:3.1.2')
 
     // spring autoconfiguration
     compileOnly("org.springframework.boot:spring-boot-starter:2.7.5")

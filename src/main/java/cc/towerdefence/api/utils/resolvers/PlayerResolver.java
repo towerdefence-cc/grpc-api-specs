@@ -3,7 +3,7 @@ package cc.towerdefence.api.utils.resolvers;
 import cc.towerdefence.api.service.McPlayerGrpc;
 import cc.towerdefence.api.service.McPlayerProto;
 import cc.towerdefence.api.utils.GrpcStubCollection;
-import cc.towerdefence.api.utils.utils.FunctionalFutureCallback;
+import cc.towerdefence.api.utils.callback.FunctionalFutureCallback;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.util.concurrent.Futures;
