@@ -2,15 +2,11 @@ package cc.towerdefence.api.utils;
 
 import cc.towerdefence.api.service.FriendGrpc;
 import cc.towerdefence.api.service.McPlayerGrpc;
-import cc.towerdefence.api.service.McPlayerSecurityGrpc;
 import cc.towerdefence.api.service.PermissionServiceGrpc;
 import cc.towerdefence.api.service.PlayerTrackerGrpc;
 import cc.towerdefence.api.service.PlayerTransporterGrpc;
 import cc.towerdefence.api.service.PrivateMessageGrpc;
 import cc.towerdefence.api.service.ServerDiscoveryGrpc;
-import cc.towerdefence.api.service.velocity.VelocityFriendGrpc;
-import cc.towerdefence.api.service.velocity.VelocityPrivateMessageGrpc;
-import cc.towerdefence.api.service.velocity.VelocityServerGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.Getter;
@@ -31,8 +27,6 @@ public class GrpcStubCollection {
     @Getter
     private static final @NotNull Optional<McPlayerGrpc.McPlayerFutureStub> playerService;
     @Getter
-    private static final @NotNull Optional<McPlayerSecurityGrpc.McPlayerSecurityFutureStub> playerSecurityService;
-    @Getter
     private static final @NotNull Optional<PermissionServiceGrpc.PermissionServiceFutureStub> permissionService;
     @Getter
     private static final @NotNull Optional<PlayerTrackerGrpc.PlayerTrackerFutureStub> playerTrackerService;
@@ -46,7 +40,6 @@ public class GrpcStubCollection {
     static {
         friendService = createChannel("friend-manager").map(FriendGrpc::newFutureStub);
         playerService = createChannel("mc-player").map(McPlayerGrpc::newFutureStub);
-        playerSecurityService = createChannel("mc-player-security").map(McPlayerSecurityGrpc::newFutureStub);
         permissionService = createChannel("permission").map(PermissionServiceGrpc::newFutureStub);
         playerTrackerService = createChannel("player-tracker").map(PlayerTrackerGrpc::newFutureStub);
         playerTransporterService = createChannel("player-transporter").map(PlayerTransporterGrpc::newFutureStub);

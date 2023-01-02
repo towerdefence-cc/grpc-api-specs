@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public class FunctionalStreamObserver {
 
     public static <T> StreamObserver<T> create(Consumer<T> onNext, Consumer<Throwable> onError, @Nullable Runnable onCompleted) {

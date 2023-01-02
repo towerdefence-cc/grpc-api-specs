@@ -1,0 +1,29 @@
+syntax = "proto3";
+package towerdefence.cc.service.gameserver.matchmaking;
+
+option java_package = "cc.towerdefence.api.service.gameserver";
+option java_outer_classname = "GameServerMatchmakingProto";
+option go_package = "service/gameserver/matchmaking";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service GameServerMatchmaking {
+  rpc MatchFound(MatchFoundRequest) returns (google.protobuf.Empty);
+  rpc MatchCancelled(MatchCancelledRequest) returns (google.protobuf.Empty);
+}
+
+// MatchFoundRequest is sent by the matchmaking director when a match is found.
+// and ALSO when the player count is updated.
+message MatchFoundRequest {
+  string player_id = 1;
+  string match_id = 2;
+
+  uint32 player_count = 3;
+  google.protobuf.Timestamp teleport_time = 4;
+}
+
+message MatchCancelledRequest {
+  string player_id = 1;
+  string match_id = 2;
+}
